@@ -5,8 +5,6 @@ gem 'rails', '4.1.0'
 
 gem 'rails-api'
 
-gem 'spring', :group => :development
-
 gem 'attribute-driven', "~> 1.0.2"
 
 gem 'nokogiri', '~> 1.6.5'
