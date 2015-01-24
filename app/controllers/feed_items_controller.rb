@@ -1,3 +1,5 @@
+require 'net/http'
+
 class FeedItemsController < ApplicationController
   include Caching::FileCache
 
