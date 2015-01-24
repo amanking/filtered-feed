@@ -31,7 +31,7 @@ module FilteredFeed
         :feed_url => feedzirra_feed.feed_url,
         :title => feedzirra_feed.title,
         :description => feedzirra_feed.description,
-        :last_modified => feedzirra_feed.last_modified,
+        :last_modified => in_gmt(feedzirra_feed.last_modified),
         :entries => feedzirra_feed.entries.collect {|feedzirra_entry| entry_from(feedzirra_entry) }
       )
     end
@@ -39,8 +39,8 @@ module FilteredFeed
     def entry_from(feedzirra_entry)
       Entry.new(
         :author => stripped_text(feedzirra_entry.author),
-        :updated => feedzirra_entry.updated,
-        :published => feedzirra_entry.published,
+        :updated => in_gmt(feedzirra_entry.updated),
+        :published => in_gmt(feedzirra_entry.published),
         :id => feedzirra_entry.id,
         :url => (stripped_text(feedzirra_entry.url) || "").gsub('#38;', ''),
         :title => stripped_text(feedzirra_entry.title),
@@ -52,6 +52,10 @@ module FilteredFeed
 
     def stripped_text(text)
       text.try(:strip)
+    end
+
+    def in_gmt(time)
+      time.try(:in_time_zone, 'GMT')
     end
   end
 end

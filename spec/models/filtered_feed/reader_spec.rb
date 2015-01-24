@@ -15,13 +15,20 @@ module FilteredFeed
         feed.feed_url.should == "http://phantomphorum.com/feed.php"
         feed.title.should == "The Phantom Phorum"
         feed.description.should == "phantomphorum.com"
+
         feed.last_modified.should be_same_time_as Time.parse("2012-02-11T21:02:15+10:00")
+        feed.last_modified.should be_in_time_zone('GMT')
 
         feed.entries.should have(15).entries
         first_entry = feed.entries.first
         first_entry.author.should == 'pcs'
+
         first_entry.updated.should be_same_time_as Time.parse("2012-02-11T21:03:55+10:00")
+        first_entry.updated.should be_in_time_zone('GMT')
+
         first_entry.published.should be_same_time_as Time.parse("2012-02-11T21:02:15+10:00")
+        first_entry.published.should be_in_time_zone('GMT')
+
         first_entry.id.should == "http://phantomphorum.com/viewtopic.php?t=3944&p=62630#p62630"
         first_entry.url.should == "http://phantomphorum.com/viewtopic.php?t=3944&p=62630#p62630"
         first_entry.title.should == "New Phantom Stories • Re: Spoofs on Current Phantom Stories"
@@ -40,7 +47,6 @@ module FilteredFeed
         feed.title.should == "ChronicleChamber"
         feed.description.should == "The digital Skull Cave!"
         feed.last_modified.should be_same_time_as Time.parse("Tue, 28 Feb 2012 10:57:53 +0000")
-
         feed.entries.should have(10).entries
         first_entry = feed.entries.first
         first_entry.author.should == 'JoeMD'
@@ -62,13 +68,20 @@ module FilteredFeed
         feed.feed_url.should == "http://phantomphorum.com/feed.php"
         feed.title.should == "The Phantom Phorum"
         feed.description.should == "phantomphorum.com"
+
         feed.last_modified.should be_same_time_as Time.parse("2012-02-11T21:02:15+10:00")
+        feed.last_modified.should be_in_time_zone('GMT')
 
         feed.entries.should have(15).entries
         first_entry = feed.entries.first
         first_entry.author.should == 'pcs'
+
         first_entry.updated.should be_same_time_as Time.parse("2012-02-11T21:03:55+10:00")
+        first_entry.updated.should be_in_time_zone('GMT')
+
         first_entry.published.should be_same_time_as Time.parse("2012-02-11T21:02:15+10:00")
+        first_entry.published.should be_in_time_zone('GMT')
+
         first_entry.id.should == "http://phantomphorum.com/viewtopic.php?t=3944&p=62630#p62630"
         first_entry.url.should == "http://phantomphorum.com/viewtopic.php?t=3944&p=62630#p62630"
         first_entry.title.should == "New Phantom Stories • Re: Spoofs on Current Phantom Stories"
