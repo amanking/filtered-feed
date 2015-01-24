@@ -19,8 +19,10 @@ gem 'feedjira', '~> 1.6.0'
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
-# Use thin as the app server
-gem 'thin'
+group :development, :production do
+  # Use thin as the app server
+  gem 'thin'
+end
 
 # Deploy with Capistrano
 # gem 'capistrano', :group => :development
