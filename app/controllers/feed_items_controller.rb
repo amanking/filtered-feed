@@ -20,15 +20,21 @@ class FeedItemsController < ApplicationController
   def feed_document
     feed_source = params[:source]
     cache_result(:filename => "#{Base64.urlsafe_encode64(feed_source)[0,100]}.xml", :expires => 15.minutes) do
-      fetch_http_response_body(feed_source)
+      fetch_http_response(feed_source).body
     end
   end
 
-  def fetch_http_response_body(feed_source)
+  def fetch_http_response(feed_source, follow_redirect_limit=5)
+    raise 'HTTP redirect too deep' if follow_redirect_limit == 0
+
     url = URI.parse(feed_source)
     req = Net::HTTP::Get.new(url.request_uri)
     res = Net::HTTP.start(url.host, url.port, :use_ssl => (url.scheme == 'https')) { |http| http.request(req) }
-    res.body
+    case res
+    when Net::HTTPSuccess     then res
+    when Net::HTTPRedirection then fetch_http_response(res['location'], follow_redirect_limit - 1)
+    else res.error!
+    end
   end
 
   def feed_reader
