@@ -8,15 +8,15 @@ module FilteredFeed
     end
 
     def extract_from(source)
-      source.scan(@regexp)
+      source.to_s.scan(@regexp)
     end
 
     def replace_in(source)
-      source.gsub(@regexp) {|match| "*" * match.length }
+      source.to_s.gsub(@regexp) {|match| "*" * match.length }
     end
 
     def present_in?(source)
-      source =~ @regexp
+      source.to_s =~ @regexp
     end
 
     class RegexpWithOptions

@@ -12,7 +12,7 @@ module FilteredFeed
     end
 
     def replace_in(source)
-      result = Nokogiri::HTML::DocumentFragment.parse(source).to_xhtml
+      result = Nokogiri::HTML::DocumentFragment.parse(source.to_s).to_xhtml
       matching_nodes_in(source).each do |node|
         result.sub!(/\s*#{Regexp.escape(node.to_xhtml)}\s*/, ' ' + replacement(node) + ' ')
       end
@@ -25,7 +25,7 @@ module FilteredFeed
 
   private
     def matching_nodes_in(source)
-      Nokogiri::HTML(source).xpath(@xpath)
+      Nokogiri::HTML(source.to_s).xpath(@xpath)
     end
 
     def replacement(node)
