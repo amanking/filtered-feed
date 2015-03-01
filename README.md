@@ -102,11 +102,11 @@ Provided filter types:
 
 * *exclude:* any feed item that matches this filter will be excluded
 * *extract:* the value of the specified attribute will be replaced with an array containing matches of the specified expression as applied on the original value
-* *replace:* the value of the specified attribute will have parts of it replaced with a strikethrough (for images and links) or a blank (any other); the parts to be replaced with be specified by the expression
+* *replace:* the value of the specified attribute will have parts of it replaced with a strikethrough (for image and anchor tags) or a blank (any other html tag) or asterisk (for regexp); the parts to be replaced will be as per the expression
 
 Provided expression types:
 
-* *regexp:* regular expressions; groups are useful in the extract filter; regexp modifiers can be specified at the end within % signs, eg. %i% or %im%
+* *regexp:* regular expressions; regexp groups are useful in the extract filter; regexp modifiers can be specified at the end, delimited by % symbol, eg. %i% or %im%
 * *xpath:* standard xpath expression syntax
 
 
