@@ -38,4 +38,5 @@ end
 group :test, :development do
   gem "rspec-rails", "~> 2.4"
   gem 'rspec-collection_matchers', '~> 1.1.2'
+  gem 'simplecov', :require => false
 end

@@ -43,6 +43,11 @@ module FilteredFeed
         regexp = RegexpExpression.new("dude\\d+")
         regexp.replace_in("usernames: abc").should == "usernames: abc"
       end
+
+      it 'should use to_s representation if source is not string' do
+        regexp = RegexpExpression.new("\\d{4}-\\d{2}-\\d{2}")
+        regexp.replace_in(Date.parse("2015-03-03")).should == "**********"
+      end
     end
 
     context 'presence' do
@@ -54,6 +59,11 @@ module FilteredFeed
       it 'should not say present if no match found' do
         regexp = RegexpExpression.new("dude\\d+")
         regexp.should_not be_present_in("usernames: abc")
+      end
+
+      it 'should use to_s representation if source is not string' do
+        regexp = RegexpExpression.new("\\d{4}-\\d{2}-\\d{2}")
+        regexp.should be_present_in(Date.parse("2015-03-03"))
       end
     end
 
