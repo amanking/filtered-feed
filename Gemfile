@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.0'
 
-gem 'rails-api'
+gem 'rails-api', '0.3.1'
 
 gem 'attribute-driven', "~> 1.0.2"
 
@@ -38,5 +38,6 @@ end
 group :test, :development do
   gem "rspec-rails", "~> 2.4"
   gem 'rspec-collection_matchers', '~> 1.1.2'
+  gem 'webmock', '~> 1.20.4'
   gem 'simplecov', :require => false
 end

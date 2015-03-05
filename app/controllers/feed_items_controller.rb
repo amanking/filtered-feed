@@ -24,8 +24,8 @@ class FeedItemsController < ApplicationController
     end
   end
 
-  def fetch_http_response(feed_source, follow_redirect_limit=5)
-    raise 'HTTP redirect too deep' if follow_redirect_limit == 0
+  def fetch_http_response(feed_source, follow_redirect_limit = 5)
+    raise 'HTTP redirect too deep' if follow_redirect_limit < 0
 
     url = URI.parse(feed_source)
     req = Net::HTTP::Get.new(url.request_uri)
@@ -77,7 +77,7 @@ class FeedItemsController < ApplicationController
   end
 
   def set_no_cache_headers
-    response.headers["Cache-Control"] = "no-cache"
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
