@@ -2,6 +2,61 @@ require 'spec_helper'
 
 module FilteredFeed
   describe RegexpExpression do
+    context 'extract' do
+      it 'should return matching results for regexp with no groups' do
+        regexp = RegexpExpression.new("dude\\d+")
+        regexp.extract_from("usernames: dude123 dude456 dude678@gmail.com").should == [ "dude123", "dude456", "dude678" ]
+      end
+
+      it 'should return matching group results as array of arrays for regexp with groups' do
+        regexp = RegexpExpression.new("dude(\\d+)(@\\w+\\.com)?")
+        regexp.extract_from("usernames: dude123 dude456 dude678@gmail.com").should == [
+          ["123", nil],
+          ["456", nil],
+          ["678", "@gmail.com"]
+        ]
+      end
+
+      it 'should return empty result if no match found' do
+        regexp = RegexpExpression.new("dude\\d+")
+        regexp.extract_from("usernames: abc").should be_empty
+      end
+
+      it 'should use to_s representation if source is not string' do
+        regexp = RegexpExpression.new("\\d{4}-\\d{2}-\\d{2}")
+        regexp.extract_from(Date.parse("2015-03-03")).should == [ "2015-03-03" ]
+      end
+    end
+
+    context 'replace' do
+      it 'should return * in place of matches with no groups' do
+        regexp = RegexpExpression.new("dude\\d+")
+        regexp.replace_in("usernames: dude123 dude456 dude678@gmail.com").should == "usernames: ******* ******* *******@gmail.com"
+      end
+
+      it 'should return * in place of matches with groups' do
+        regexp = RegexpExpression.new("dude(\\d+)(@\\w+\\.com)?")
+        regexp.replace_in("usernames: dude123 dude456 dude678@gmail.com").should == "usernames: ******* ******* *****************"
+      end
+
+      it 'should return without any replacement if no match found' do
+        regexp = RegexpExpression.new("dude\\d+")
+        regexp.replace_in("usernames: abc").should == "usernames: abc"
+      end
+    end
+
+    context 'presence' do
+      it 'should say present if match found' do
+        regexp = RegexpExpression.new("dude\\d+")
+        regexp.should be_present_in("usernames: dude123 dude456 dude678@gmail.com")
+      end
+
+      it 'should not say present if no match found' do
+        regexp = RegexpExpression.new("dude\\d+")
+        regexp.should_not be_present_in("usernames: abc")
+      end
+    end
+
     context "regexp with options (between %% in the end)" do
 
       it "should pass on ignorecase option" do

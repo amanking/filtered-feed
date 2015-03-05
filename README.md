@@ -27,7 +27,7 @@ var configuration = {
         ]
     },
     extract: {
-        published: { regexp: '(\\d{4}-\\d{2}-\\d{2}[T\\s](?:\\d{2}:?){3})' }
+        published: { regexp: '\\d{4}-\\d{2}-\\d{2}[T\\s](?:\\d{2}:?){3}' }
     },
     exclude: {
         content: { regexp: 'slang%i%' },
@@ -35,7 +35,7 @@ var configuration = {
     }
 };
 // Using https://github.com/jaubourg/jquery-jsonp
-$.jsonp({ 
+$.jsonp({
     url: 'https://filtered-feed.herokuapp.com/feed_items.json',
     data: configuration,
     callbackParameter: "callback",
@@ -61,7 +61,7 @@ The response JSON structure will be like so:
     {
       "author": "The Phantom Trail",
       "updated": "2015-02-28T09:21:27.000+00:00",
-      "published": [ "2015-02-28T09:21:27" ],
+      "published": "2015-02-28 09:21:27",
       "id": "191511a2628b51d2ff391fb8912198cb",
       "url": "http:\/\/www.facebook.com\/permalink.php?story_fbid=676718945772241&id=150387955072012",
       "title": "",
@@ -72,14 +72,15 @@ The response JSON structure will be like so:
     {
       "author": "The Phantom Trail",
       "updated": "2015-02-17T11:30:43.000+00:00",
-      "published": [ "2015-02-17T11:30:43" ],
+      "published": "2015-02-17 11:30:43",
       "id": "af85d04aacf4142aa7a830361ec01566",
       "url": "http:\/\/www.facebook.com\/permalink.php?story_fbid=671879052922897&id=150387955072012",
       "title": "The Phantom first walked the streets of the town like an ordinary man 79 years a...",
       "categories": [],
       "content": "The Phantom first walked the streets of the town like an ordinary man 79 years ago... First appearance in a daily newspaper strip on February 17, 1936. Happy birthday, Phantom! Keep walking!",
       "summary": null
-    }
+    },
+    // ...
   ]
 }
 ```
@@ -101,12 +102,12 @@ And the expression syntax is:
 Provided filter types:
 
 * *exclude:* any feed item that matches this filter will be excluded
-* *extract:* the value of the specified attribute will be replaced with an array containing matches of the specified expression as applied on the original value
-* *replace:* the value of the specified attribute will have parts of it replaced with a strikethrough (for image and anchor tags) or a blank (any other html tag) or asterisk (for regexp); the parts to be replaced will be as per the expression
+* *extract:* the value of the specified attribute will be replaced with the match found for the specified expression, as applied on the original value; if there are multiple matches, that many copies of the corresponding feed item are returned, with the specified attribute's value changed for each match found
+* *replace:* the value of the specified attribute will have parts of it replaced with a strikethrough (for image and anchor tags) or a blank (for any other html tag) or asterisks (for regexp); the parts to be replaced will be found as per the expression
 
 Provided expression types:
 
-* *regexp:* regular expressions; regexp groups are useful in the extract filter; regexp modifiers can be specified at the end, delimited by % symbol, eg. %i% or %im%
+* *regexp:* regular expressions; regexp modifiers can be specified at the end, delimited by % symbol, eg. %i% or %im%; also note that regexp groups will alter the behaviour of the extract filter to return an array of group matches per regexp match instead of substitution with the regexp match itself;
 * *xpath:* standard xpath expression syntax
 
 
