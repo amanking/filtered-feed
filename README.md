@@ -1,6 +1,7 @@
-Filtered Feed
+Filtered Feed [![Build Status](https://travis-ci.org/amanking/filtered-feed.svg?branch=master)](https://travis-ci.org/amanking/filtered-feed)
 =============
 by [Aman King](http://www.amanking.com)
+
 
 https://github.com/amanking/filtered-feed
 
