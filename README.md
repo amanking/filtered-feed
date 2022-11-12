@@ -7,10 +7,10 @@ https://github.com/amanking/filtered-feed
 
 FilteredFeed is an API to apply filters and transformations to an RSS or ATOM feed and to retrieve the feed items in JSON format. It is made available over HTTP as a JSON Web Service.
 
-The Web Service is live on Heroku:
+The Web Service is live:
 
-* http://filtered-feed.herokuapp.com/feed_items.json
-* https://filtered-feed.herokuapp.com/feed_items.json
+* http://filtered-feed.alwaysdata.net/feed_items.json
+* https://filtered-feed.alwaysdata.net/feed_items.json
 
 A typical use case is for rendering feeds directly in an HTML page using JavaScript. Live example: http://www.phantomtrail.com/phan-zone/phan-speak
 
